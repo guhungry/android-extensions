@@ -2,6 +2,8 @@
 
 buildscript {
     ext.kotlin_version = '1.2.61'
+    ext.mockito_version = '2.20.1'
+
     repositories {
         google()
         jcenter()
@@ -19,6 +21,8 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
+        maven { url "http://repository.jetbrains.com/all" }
     }
 }
 
