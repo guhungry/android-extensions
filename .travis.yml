@@ -1,0 +1,38 @@
+language: android
+
+android:
+  components:
+    - tools
+    - platform-tools
+
+jdk:
+  - oraclejdk8
+
+# as per http://blog.travis-ci.com/2014-12-17-faster-builds-with-container-based-infrastructure/
+sudo: false
+
+before_install:
+  # Install SDK license so Android Gradle plugin can install deps.
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo "d56f5187479451eabf01fb78af6dfcb131a6481e" >> "$ANDROID_HOME/licenses/android-sdk-license"
+
+# script for build and release via Travis to Bintray
+script: gradle/buildViaTravis.sh
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  email: false
+
+# cache between builds
+cache:
+  directories:
+  - $HOME/.m2
+  - $HOME/.gradle
+
+env:
+  global:
+  - secure: U0qWfDN6a3cZx4Z/oLG1LGJxxF14+pNhQ8LGEs4YB2lktwaiG0FmS1FTghSM6QTDgck3tX/TkpxkWWC/2PIcbQOA0IFsjJf0hIhajs8N5wcmoGNVyl9k7b7ReZWkuar4yximep224n8ybCKP8RSK5xMYJMSOLKyAS/+2DSjMqYZfEeqaKlTSTAbw8ylOv2GQGOEl/U0Mn2POgS64dK8Q5JFeS9qum5f9IYOJlOFc/xMHH2d+yM2fxyl0Qh1Sg1FP+ZvEv3RZJ0ef5y3JdHnjnOChEVPbHuXN1Woq4lZVYqwfX0CB9XtdPJEt1oY1Y48VEyoXcXqBROvWB8qjI1thFVd1lJVi7+uJc/lkHlfQQPiX/EpnMxQ21zHA7aJ0bNPvKondpwh3wiLiH2YJLSJAnRd2dYqMnI4qCsyCt7qhSDPiONf8+MDuIvxXWVhZ0RwTpPKb5Q3WYxCs5tlgPt/pCAxMqRo9BqUuFaCB3eJk+/c3LTbpVaB4WOzMeBmmAMQ0E36cF9UHWpmB7ku+2LIbn5cRvr6cCd1XjPED11txlq3UnoJtETYQYiSHVKUr+pWEeoQ8oVEHmTlFHbxWtndk2zGJwzYa0SLiqK5DonRaHaFGQ0sl4YzI4NgG4IaH3gyGtUIXc5KqjVrH6rBP2eneWjD447RSyakm1ADctPetinE=
+  - secure: aFXI0P/6fpih2Myt9LKQKSz9SzzzbBkX+WSk1DlzFRwpFtLJRIcLznxwr5IatbmOpOQDyKVJy82HOy3lrCacorXPhkJoUqbTrpwYH0bj6EGlF5D79b0rh83ecVoIJlUHmrc7tuG1g0fCrAHxbcS+VcICYVNi4UwUWBCc35v9MK1m9bmpca6eOLojH0ESwIGMdwi+y21Ew9cu7r+22QmhZYdEsxoacX8HxDcFx1YvP/Nsg40i8S/Qu1z1dxekx+/rP+0Na9/xzUL8SDurNnJ+Ujev+4x1fnaMYY/aA2FcSq7qnlQFHWFacajwHr8tXu1hl+7m0w5/WfksAuXhdfI6RypItdH9lZ8h3vuYzYUuV0AcIMm9stnXUMSp6kooA19CEUv5vUcldb9nkw8+QZL5GnbTU5crcQQIou/GS7vE+t4mVVtBbopSu3EPZ7HMZygSatZ5qoGLSo9KmUZOzQYzfY2/RMcUbTb7v4X0wbUxmfHJ1b+27+PwbECJamuc2d8HTz5PDp0gATjpAx0Kno07G9YGmWgwhiF+2VquDiLzEZBAP4m7K8CE9tfA7cqTqcVnrtmnhomtOIqM4hcvTAhhlUfapKGhCDuQ9/W+3OwhhkFQCHeqb3eUvLzrjG/S4bcNNZEMEk5gdrcknR/1ZSvFT7/sqhO9wqpArzsMGccb8xA=
