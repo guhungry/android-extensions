@@ -15,7 +15,6 @@ android {
         versionName "0.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -32,10 +31,11 @@ android {
         junitPlatform {
             filters {
                 engines {
-                    include 'spek'
+                    include 'spek2'
                 }
             }
         }
+        unitTests.returnDefaultValues = true
     }
 }
 
@@ -51,15 +51,17 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+
+    // Junit5
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:$junit5_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5_version"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit5_version"
+
     // Tests - Spek
-    testImplementation("org.jetbrains.spek:spek-api:$spekVersion") {
-        exclude group: "org.jetbrains.kotlin"
-    }
-    testImplementation("org.jetbrains.spek:spek-junit-platform-engine:$spekVersion") {
-        exclude group: "org.junit.platform"
-        exclude group: "org.jetbrains.kotlin"
-    }
+    testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
+    testImplementation "org.spekframework.spek2:spek-runner-junit5:$spek_version"
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
     // Mockito
     testImplementation "org.mockito:mockito-core:$mockito_version"
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"
