@@ -18,6 +18,7 @@ fi
 
 ./gradlew sonarqube \
   -Dsonar.projectKey=guhungry_android-extensions \
+  -Dsonar.projectName=android-extensions \
   -Dsonar.organization=guhungry-github \
   -Dsonar.host.url=https://sonarcloud.io \
   -Dsonar.login=$sonarqubeKey
